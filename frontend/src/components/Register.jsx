@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import api from "../api.js";
-import "../styles/Auth.css";
+import "../styles/Register.css";
 
 function Register({ onLogin }) {
   const [form, setForm] = useState({

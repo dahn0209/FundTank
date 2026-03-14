@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import api from "../api.js";
-import "../styles/Auth.css";
+import "../styles/Login.css";
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState("");
