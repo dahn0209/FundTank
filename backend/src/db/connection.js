@@ -1,3 +1,4 @@
+// Authors: Abhimanyu Dudeja, Kashish Rahulbhai Khatri
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 

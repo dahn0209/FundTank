@@ -1,3 +1,4 @@
+// Authors: Abhimanyu Dudeja, Kashish Rahulbhai Khatri
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET || "fundtank_secret_key_2026";

@@ -1,3 +1,4 @@
+// Authors: Abhimanyu Dudeja, Kashish Rahulbhai Khatri
 const API_BASE = "/api";
 
 async function request(endpoint, options = {}) {
