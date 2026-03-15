@@ -1,3 +1,4 @@
+// Authors: Abhimanyu Dudeja, Kashish Rahulbhai Khatri
 import { MongoClient, ObjectId } from "mongodb";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
