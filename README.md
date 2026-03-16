@@ -23,8 +23,6 @@ FundTank lets users experience startup culture through simulation. Entrepreneurs
 
 Deployed at: [https://fundtank.onrender.com](https://fundtank.onrender.com)
 
-Demo video: [YouTube Link](https://youtube.com)
-
 ## Features
 
 ### Startup Pitches & Voting (Kashish)
