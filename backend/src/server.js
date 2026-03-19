@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import { connectDB } from "./db/connection.js";
+import passport from "./middleware/passport.js";
 import authRoutes from "./routes/auth.js";
 import pitchRoutes from "./routes/pitches.js";
 import investmentRoutes from "./routes/investments.js";
@@ -18,7 +19,6 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware - manual CORS (no cors library)
 app.use((req, res, next) => {
   const allowedOrigins = [
     "http://localhost:5173",
@@ -40,15 +40,14 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+app.use(passport.initialize());
 
-// API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/pitches", pitchRoutes);
 app.use("/api/investments", investmentRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/comments", commentRoutes);
 
-// Serve static frontend in production
 const frontendPath = path.join(__dirname, "../../frontend/dist");
 app.use(express.static(frontendPath));
 app.get("*", (req, res) => {
@@ -57,7 +56,6 @@ app.get("*", (req, res) => {
   }
 });
 
-// Start server
 async function start() {
   await connectDB();
   app.listen(PORT, () => {

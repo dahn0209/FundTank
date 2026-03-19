@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { ObjectId } from "mongodb";
 import { getDB } from "../db/connection.js";
+import passport from "../middleware/passport.js";
 
 const router = Router();
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -57,24 +58,14 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// POST /api/auth/login
-router.post("/login", async (req, res) => {
-  try {
-    const db = getDB();
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({ error: "Email and password are required" });
+// POST /api/auth/login - uses passport local strategy
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", { session: false }, (err, user, info) => {
+    if (err) {
+      return res.status(500).json({ error: "Server error" });
     }
-
-    const user = await db.collection("users").findOne({ email });
     if (!user) {
-      return res.status(401).json({ error: "Invalid credentials" });
-    }
-
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res.status(401).json({ error: info.message || "Invalid credentials" });
     }
 
     const token = jwt.sign(
@@ -89,10 +80,7 @@ router.post("/login", async (req, res) => {
 
     const { password: _pw, ...safeUser } = user;
     res.json({ token, user: safeUser });
-  } catch (error) {
-    console.error("Login error:", error);
-    res.status(500).json({ error: "Server error" });
-  }
+  })(req, res, next);
 });
 
 // GET /api/auth/me
